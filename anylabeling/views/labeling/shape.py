@@ -42,6 +42,9 @@ class Shape:
     point_type = P_ROUND
     point_size = 4
     scale = 1.5
+    global_id = 0
+
+    # Global count to get ids
 
     def __init__(
         self,
@@ -52,7 +55,10 @@ class Shape:
         flags=None,
         group_id=None,
     ):
+        # global global_id
         self.label = label
+        self.id = Shape.global_id
+        Shape.global_id += 1
         self.text = text
         self.group_id = group_id
         self.points = []
@@ -61,6 +67,9 @@ class Shape:
         self.shape_type = shape_type
         self.flags = flags
         self.other_data = {}
+
+        self.parents = []
+        self.children = []
 
         self._highlight_index = None
         self._highlight_mode = self.NEAR_VERTEX
@@ -337,3 +346,33 @@ class Shape:
 
     def __setitem__(self, key, value):
         self.points[key] = value
+
+    def add_children(self, children):
+        temp_children = [child for child in children]
+        for child in temp_children:
+          if not child in self.children:
+            self.children.append(child)
+            child.add_parents([self])
+  
+    def remove_children(self, children):
+        temp_children = [child for child in children]
+        for child in temp_children:
+            print(child.id)
+            if child in self.children:
+                print(child.id)
+                self.children.remove(child)
+                child.remove_parents([self])
+
+    def add_parents(self, parents):
+        temp_parents = [parent for parent in parents]
+        for parent in temp_parents:
+            if not parent in self.parents:
+                self.parents.append(parent)
+                parent.add_children([self])
+  
+    def remove_parents(self, parents):
+        temp_parents = [parent for parent in parents]
+        for parent in temp_parents:
+            if parent in self.parents:
+                self.parents.remove(parent)
+                parent.remove_children([self])

@@ -19,6 +19,9 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWhatsThis,
     QMessageBox,
+    QCheckBox,
+    QPushButton,
+    QListWidget,
 )
 
 from services.auto_labeling.types import AutoLabelingMode
@@ -988,6 +991,102 @@ class LabelingWidget(LabelDialog):
         right_sidebar_layout.addWidget(self.label_dock)
         right_sidebar_layout.addWidget(self.shape_dock)
         right_sidebar_layout.addWidget(self.file_dock)
+
+#######################################################################################################################################################
+# Inserting previously implemented children-parent modification layout code in here
+#######################################################################################################################################################
+        # Layout for widgets for adding parents and children
+        tree_layout = QVBoxLayout()
+        tree_layout.setAlignment(Qt.AlignHCenter)
+
+        # Currently selected object
+        self.selected_label = QLabel("Selected Item:")
+        self.selected_label.setAlignment(Qt.AlignCenter)
+        
+        self.item_label = QLabel("None")
+        self.item_label.setAlignment(Qt.AlignCenter)
+
+        # Toggle for being able to constantly visualize the relations of the currently selected object
+        self.display_children_button = QCheckBox("Display children", self)
+        self.display_children_button.setChecked(False)
+        # self.display_children_button.clicked.connect(self.visualize_children_button_checked)
+
+        self.display_parents_button = QCheckBox("Display parents", self)
+        self.display_parents_button.setChecked(False)
+        # self.display_parents_button.clicked.connect(self.visualize_parents_button_checked)
+
+        # Child related widgets
+        self.child_label = QLabel()
+        self.child_label.setAlignment(Qt.AlignCenter)
+        self.child_label.setText("Children")
+        self.child_list = QListWidget()
+        self.child_button = QPushButton("Edit Child List")
+        self.child_button.setEnabled(False)
+        self.child_button.setDown(True)
+        self.child_is_clicked = False
+        # self.child_button.clicked.connect(self.child_button_clicked)
+
+        # Parent related widgets
+        self.parent_label = QLabel()
+        self.parent_label.setAlignment(Qt.AlignCenter)
+        self.parent_label.setText("Parent")
+        self.parent_list = QListWidget()
+        self.parent_button = QPushButton("Edit Parent List")
+        self.parent_button.setEnabled(False)
+        self.parent_button.setDown(True)
+        self.merge_is_clicked = False
+        # self.parent_button.clicked.connect(self.parent_button_clicked)
+
+        # Export related widget
+        self.next_button = QPushButton("Next")
+        # self.next_button.clicked.connect(self.next_button_clicked)
+        self.prev_button = QPushButton("Prev")
+        # self.prev_button.clicked.connect(self.prev_button_clicked)
+        traversal_layout = QHBoxLayout()
+        traversal_layout.addWidget(self.prev_button)
+        traversal_layout.addWidget(self.next_button)
+
+        # Merging related widget
+        self.merge_label = QLabel()
+        self.merge_label.setAlignment(Qt.AlignCenter)
+        self.merge_label.setText("Merging")
+
+        self.merge_button = QPushButton("Select For Merging")
+        self.merge_button.setEnabled(False)
+        self.merge_button.setDown(True)
+        # self.merge_button.clicked.connect(self.merge_button_clicked)
+        self.merge_is_clicked = False
+
+        self.unmerge_button = QPushButton("Select For Separation")
+        self.unmerge_button.setEnabled(False)
+        self.unmerge_button.setDown(True)
+        # self.unmerge_button.clicked.connect(self.unmerge_button_clicked)
+        self.unmerge_is_clicked = False
+
+        self.merge_cancel_button = QPushButton("Cancel")
+        self.merge_cancel_button.setEnabled(False)
+        # self.merge_cancel_button.clicked.connect(self.merge_cancel_button_clicked)
+        self.merge_cancel_button.setDown(True)
+
+        tree_layout.addWidget(self.selected_label)
+        tree_layout.addWidget(self.item_label)
+        tree_layout.addWidget(self.display_children_button)
+        tree_layout.addWidget(self.display_parents_button)
+        tree_layout.addWidget(self.child_label)
+        tree_layout.addWidget(self.child_list)
+        tree_layout.addWidget(self.child_button)
+        tree_layout.addWidget(self.parent_label)
+        tree_layout.addWidget(self.parent_list)
+        tree_layout.addWidget(self.parent_button)
+        tree_layout.addWidget(self.merge_label)
+        tree_layout.addWidget(self.merge_button)
+        tree_layout.addWidget(self.unmerge_button)
+        tree_layout.addWidget(self.merge_cancel_button)
+
+        black_magic = QHBoxLayout()
+        black_magic.addItem(right_sidebar_layout)
+        black_magic.addItem(tree_layout)
+#######################################################################################################################################################
         self.file_dock.setFeatures(QDockWidget.DockWidgetFloatable)
         dock_features = (
             ~QDockWidget.DockWidgetMovable
@@ -1010,7 +1109,8 @@ class LabelingWidget(LabelDialog):
 
         self.shape_text_edit.textChanged.connect(self.shape_text_changed)
 
-        layout.addItem(right_sidebar_layout)
+        # layout.addItem(right_sidebar_layout)
+        layout.addItem(black_magic)
         self.setLayout(layout)
 
         if output_file is not None and self._config["auto_save"]:
