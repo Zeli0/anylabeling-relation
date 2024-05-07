@@ -21,11 +21,11 @@ from PyQt5.QtWidgets import (
     QMessageBox,
 )
 
-from anylabeling.services.auto_labeling.types import AutoLabelingMode
+from services.auto_labeling.types import AutoLabelingMode
 
-from ...app_info import __appname__
+from app_info import __appname__
 from . import utils
-from ...config import get_config, save_config
+from config import get_config, save_config
 from .label_file import LabelFile, LabelFileError
 from .logger import logger
 from .shape import Shape
@@ -167,6 +167,11 @@ class LabelingWidget(LabelDialog):
         self.label_list.item_changed.connect(self.label_item_changed)
         self.label_list.item_dropped.connect(self.label_order_changed)
         self.shape_dock = QtWidgets.QDockWidget(self.tr("Objects"), self)
+        self.shape_dock.setObjectName("Objects")
+        self.shape_dock.setWidget(self.label_list)
+        self.shape_dock.setStyleSheet(dock_title_style)
+
+        self.shape_dock = QtWidgets.QDockWidget(self.tr("Children"), self)
         self.shape_dock.setObjectName("Objects")
         self.shape_dock.setWidget(self.label_list)
         self.shape_dock.setStyleSheet(dock_title_style)
@@ -978,7 +983,7 @@ class LabelingWidget(LabelDialog):
         right_sidebar_layout.addWidget(
             self.shape_text_label, 0, Qt.AlignCenter
         )
-        right_sidebar_layout.addWidget(self.shape_text_edit)
+        # right_sidebar_layout.addWidget(self.shape_text_edit)
         right_sidebar_layout.addWidget(self.flag_dock)
         right_sidebar_layout.addWidget(self.label_dock)
         right_sidebar_layout.addWidget(self.shape_dock)

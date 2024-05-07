@@ -2,8 +2,8 @@
 
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QVBoxLayout, QWidget
 
-from ..app_info import __appdescription__, __appname__
-from .labeling.label_wrapper import LabelingWrapper
+from app_info import __appdescription__, __appname__
+from views.labeling.label_wrapper import LabelingWrapper
 
 
 class MainWindow(QMainWindow):
@@ -23,7 +23,8 @@ class MainWindow(QMainWindow):
         self.config = config
 
         self.setContentsMargins(0, 0, 0, 0)
-        self.setWindowTitle(__appname__)
+        self.setWindowTitle("AnyLabeling Bootleg")
+        # self.setWindowTitle(__appname__)
 
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(10, 10, 10, 10)

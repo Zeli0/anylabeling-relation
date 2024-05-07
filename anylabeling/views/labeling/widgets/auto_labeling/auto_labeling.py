@@ -5,8 +5,8 @@ from PyQt5 import uic
 from PyQt5.QtCore import pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import QWidget, QFileDialog
 
-from anylabeling.services.auto_labeling.model_manager import ModelManager
-from anylabeling.services.auto_labeling.types import AutoLabelingMode
+from services.auto_labeling.model_manager import ModelManager
+from services.auto_labeling.types import AutoLabelingMode
 
 
 class AutoLabelingWidget(QWidget):

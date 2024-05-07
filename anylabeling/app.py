@@ -15,13 +15,13 @@ import sys
 import yaml
 from PyQt5 import QtCore, QtWidgets
 
-from anylabeling.app_info import __appname__
-from anylabeling.config import get_config
-from anylabeling import config as anylabeling_config
-from anylabeling.views.mainwindow import MainWindow
-from anylabeling.views.labeling.logger import logger
-from anylabeling.views.labeling.utils import new_icon
-from anylabeling.resources import resources
+from app_info import __appname__
+from config import get_config
+import config as anylabeling_config
+from views.mainwindow import MainWindow
+from views.labeling.logger import logger
+from views.labeling.utils import new_icon
+from resources import resources
 
 
 def main():

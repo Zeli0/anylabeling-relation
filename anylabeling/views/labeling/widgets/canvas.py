@@ -5,7 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QWheelEvent
 
-from anylabeling.services.auto_labeling.types import AutoLabelingMode
+from services.auto_labeling.types import AutoLabelingMode
 
 from .. import utils
 from ..shape import Shape
@@ -865,8 +865,8 @@ class Canvas(
                     fm = QtGui.QFontMetrics(p.font())
                     rect = fm.boundingRect(text)
                     p.fillRect(
-                        rect.x() + bbox.x() - 3,
-                        rect.y() + bbox.y() - 3,
+                        int(rect.x()) + bbox.x() - 3,
+                        int(rect.y()) + bbox.y() - 3,
                         rect.width(),
                         rect.height(),
                         QtGui.QColor("#00FF00"),

@@ -24,8 +24,8 @@ from abc import abstractmethod
 from PyQt5.QtCore import QFile, QObject
 from PyQt5.QtGui import QImage
 
-from .types import AutoLabelingResult
-from anylabeling.views.labeling.label_file import LabelFile, LabelFileError
+from services.auto_labeling.types import AutoLabelingResult
+from views.labeling.label_file import LabelFile, LabelFileError
 
 
 class Model(QObject):

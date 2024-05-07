@@ -14,11 +14,11 @@ import yaml
 from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtCore import QCoreApplication
 
-from anylabeling.configs import auto_labeling as auto_labeling_configs
-from anylabeling.services.auto_labeling.types import AutoLabelingResult
-from anylabeling.utils import GenericWorker
+from configs import auto_labeling as auto_labeling_configs
+from services.auto_labeling.types import AutoLabelingResult
+from utils import GenericWorker
 
-from anylabeling.config import get_config, save_config
+from config import get_config, save_config
 
 import ssl
 
@@ -391,7 +391,7 @@ class ModelManager(QObject):
             self.model_configs[model_id].update(model_config)
 
         if model_config["type"] == "yolov5":
-            from .yolov5 import YOLOv5
+            from yolov5 import YOLOv5
 
             try:
                 model_config["model"] = YOLOv5(
@@ -413,7 +413,7 @@ class ModelManager(QObject):
                 )
                 return
         elif model_config["type"] == "yolov8":
-            from .yolov8 import YOLOv8
+            from yolov8 import YOLOv8
 
             try:
                 model_config["model"] = YOLOv8(
@@ -435,7 +435,7 @@ class ModelManager(QObject):
                 )
                 return
         elif model_config["type"] == "segment_anything":
-            from .segment_anything import SegmentAnything
+            from services.auto_labeling.segment_anything import SegmentAnything
 
             try:
                 model_config["model"] = SegmentAnything(

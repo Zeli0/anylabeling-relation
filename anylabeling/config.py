@@ -8,9 +8,9 @@ except ImportError:
 
 import yaml
 
-from anylabeling import configs as anylabeling_configs
+import configs as anylabeling_configs
 
-from .views.labeling.logger import logger
+from views.labeling.logger import logger
 
 
 # Save current config file
