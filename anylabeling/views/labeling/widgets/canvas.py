@@ -520,6 +520,13 @@ class Canvas(
                     self.selection_changed.emit(
                         [x for x in self.selected_shapes if x != self.h_hape]
                     )
+                    if len(self.selected_shapes) == 1:
+                        self.parent.display_selected_name(self.selected_shapes[0].label)
+                    elif len(self.selected_shapes) == 0:
+                        self.parent.clear_selected_name()
+
+
+                    
 
         if self.moving_shape and self.h_hape:
             index = self.shapes.index(self.h_hape)
@@ -603,6 +610,10 @@ class Canvas(
                             )
                         else:
                             self.selection_changed.emit([shape])
+                        if len(self.selected_shapes) > 1:
+                            self.parent.display_selected_name("Multiple")
+                        else:
+                            self.parent.display_selected_name(shape.label)
                         self.h_shape_is_selected = False
                     else:
                         self.h_shape_is_selected = True
@@ -673,6 +684,7 @@ class Canvas(
             self.set_hiding(False)
             self.selection_changed.emit([])
             self.h_shape_is_selected = False
+            self.parent.clear_selected_name()
             self.update()
 
     def delete_selected(self):

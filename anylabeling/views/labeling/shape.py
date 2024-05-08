@@ -337,16 +337,7 @@ class Shape:
     def copy(self):
         """Copy shape"""
         return copy.deepcopy(self)
-
-    def __len__(self):
-        return len(self.points)
-
-    def __getitem__(self, key):
-        return self.points[key]
-
-    def __setitem__(self, key, value):
-        self.points[key] = value
-
+    
     def add_children(self, children):
         temp_children = [child for child in children]
         for child in temp_children:
@@ -376,3 +367,12 @@ class Shape:
             if parent in self.parents:
                 self.parents.remove(parent)
                 parent.remove_children([self])
+
+    def __len__(self):
+        return len(self.points)
+
+    def __getitem__(self, key):
+        return self.points[key]
+
+    def __setitem__(self, key, value):
+        self.points[key] = value

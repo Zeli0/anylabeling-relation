@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QListWidget,
 )
+from PyQt5.QtGui import QFont
 
 from services.auto_labeling.types import AutoLabelingMode
 
@@ -517,6 +518,7 @@ class LabelingWidget(LabelDialog):
             enabled=False,
         )
 
+        
         documentation = action(
             self.tr("&Documentation"),
             self.documentation,
@@ -1002,17 +1004,19 @@ class LabelingWidget(LabelDialog):
         # Currently selected object
         self.selected_label = QLabel("Selected Item:")
         self.selected_label.setAlignment(Qt.AlignCenter)
+        self.selected_label.setFont(QFont('Arial', 14))
         
         self.item_label = QLabel("None")
         self.item_label.setAlignment(Qt.AlignCenter)
+        self.item_label.setFont(QFont('Arial', 12))
 
         # Toggle for being able to constantly visualize the relations of the currently selected object
-        self.display_children_button = QCheckBox("Display children", self)
-        self.display_children_button.setChecked(False)
+        # self.display_children_button = QCheckBox("Display children", self)
+        # self.display_children_button.setChecked(False)
         # self.display_children_button.clicked.connect(self.visualize_children_button_checked)
 
-        self.display_parents_button = QCheckBox("Display parents", self)
-        self.display_parents_button.setChecked(False)
+        # self.display_parents_button = QCheckBox("Display parents", self)
+        # self.display_parents_button.setChecked(False)
         # self.display_parents_button.clicked.connect(self.visualize_parents_button_checked)
 
         # Child related widgets
@@ -1020,7 +1024,8 @@ class LabelingWidget(LabelDialog):
         self.child_label.setAlignment(Qt.AlignCenter)
         self.child_label.setText("Children")
         self.child_list = QListWidget()
-        self.child_button = QPushButton("Edit Child List")
+        self.child_list.setMaximumHeight(350)
+        self.child_button = QPushButton("Visualize Children")
         self.child_button.setEnabled(False)
         self.child_button.setDown(True)
         self.child_is_clicked = False
@@ -1031,7 +1036,8 @@ class LabelingWidget(LabelDialog):
         self.parent_label.setAlignment(Qt.AlignCenter)
         self.parent_label.setText("Parent")
         self.parent_list = QListWidget()
-        self.parent_button = QPushButton("Edit Parent List")
+        self.parent_list.setMaximumHeight(350)
+        self.parent_button = QPushButton("Visualize Parents")
         self.parent_button.setEnabled(False)
         self.parent_button.setDown(True)
         self.merge_is_clicked = False
@@ -1070,8 +1076,8 @@ class LabelingWidget(LabelDialog):
 
         tree_layout.addWidget(self.selected_label)
         tree_layout.addWidget(self.item_label)
-        tree_layout.addWidget(self.display_children_button)
-        tree_layout.addWidget(self.display_parents_button)
+        # tree_layout.addWidget(self.display_children_button)
+        # tree_layout.addWidget(self.display_parents_button)
         tree_layout.addWidget(self.child_label)
         tree_layout.addWidget(self.child_list)
         tree_layout.addWidget(self.child_button)
@@ -2854,3 +2860,9 @@ class LabelingWidget(LabelDialog):
             self.shape_text_edit.textChanged.disconnect()
             self.shape_text_edit.setPlainText("")
             self.shape_text_edit.textChanged.connect(self.shape_text_changed)
+    
+    def display_selected_name(self, label):
+        self.item_label.setText(label)
+
+    def clear_selected_name(self):
+        self.item_label.setText("None")
